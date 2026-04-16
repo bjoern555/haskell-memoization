@@ -1,12 +1,20 @@
 module Main where
 
 import Criterion.Main
-import Algorithms (fibSlow, fibFast)
+import Algorithms (fibSlow, fibFast, levSlow, levFast)
 
 main :: IO ()
-main = defaultMain 
-  [ bgroup "Fibonacci (n=35)" 
-      [ bench "fibSlow (Standard Rekursion)" $ whnf fibSlow 35
-      , bench "fibFast (Memoized Fixpoint)"  $ whnf fibFast 35
-      ]
-  ]
+main = do
+  let wort1 = "Informatiker"
+  let wort2 = "Mathematiker"
+
+  defaultMain 
+    [ bgroup "1D: Fibonacci (n=30)" 
+        [ bench "fibSlow (Standard)" $ whnf fibSlow 30
+        , bench "fibFast (Memoized)" $ whnf fibFast 30
+        ]
+    , bgroup "2D: Levenshtein (12 Buchstaben)" 
+        [ bench "levSlow (Standard)" $ whnf (levSlow wort1) wort2
+        , bench "levFast (Memoized)" $ whnf (levFast wort1) wort2
+        ]
+    ]
