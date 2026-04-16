@@ -1,11 +1,12 @@
 module Main where
 
+import Criterion.Main
 import Algorithms (fibSlow, fibFast)
 
 main :: IO ()
-main = do
-    putStrLn "\nfibFast with 35 (with Cache)"
-    print (fibFast 35)
-    
-    putStrLn "\nfibSlow with 35 (without Cache)"
-    print (fibSlow 35)
+main = defaultMain 
+  [ bgroup "Fibonacci (n=35)" 
+      [ bench "fibSlow (Standard Rekursion)" $ whnf fibSlow 35
+      , bench "fibFast (Memoized Fixpoint)"  $ whnf fibFast 35
+      ]
+  ]
